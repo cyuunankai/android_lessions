@@ -4,5 +4,10 @@
     <string name="app_name">SlideImage</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_new">NewActivity</string>
+    <string name="title_activity_edit">EditActivity</string>
+    <string name="title_activity_my_new">MyNewActivity</string>
+    <string name="title_activity_my_edit">MyEditActivity</string>
+    <string name="title_activity_my_detail">MyDetailActivity</string>
 
 </resources>

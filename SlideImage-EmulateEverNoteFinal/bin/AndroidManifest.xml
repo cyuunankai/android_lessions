@@ -22,6 +22,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".MyNewActivity"
+            android:label="@string/title_activity_my_new" >
+        </activity>
+        <activity
+            android:name=".MyEditActivity"
+            android:label="@string/title_activity_my_edit" >
+        </activity>
+        <activity
+            android:name=".MyDetailActivity"
+            android:label="@string/title_activity_my_detail" >
+        </activity>
     </application>
 
 </manifest>
