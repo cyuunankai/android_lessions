@@ -6,7 +6,7 @@
     <fragment android:id="@+id/headlines" 
               android:layout_height="fill_parent"
               android:name="com.example.newsreader.HeadlinesFragment"
-              android:layout_width="400dp"
+              android:layout_width="200dp"
               android:layout_marginRight="10dp" />
     <fragment android:id="@+id/article" 
               android:layout_height="fill_parent"
