@@ -6,6 +6,8 @@ import org.xmlpull.v1.XmlPullParser;
 
 import android.util.Log;
 
+import com.example.getgeonameandweather.bean.LocationData;
+
 public class LocationSearch extends WwoApi {
 	public static final String FREE_API_ENDPOINT = "http://api.worldweatheronline.com/free/v2/search.ashx";
 	public static final String PREMIUM_API_ENDPOINT = "http://api.worldweatheronline.com/free/v1/search.ashx";
@@ -34,9 +36,9 @@ public class LocationSearch extends WwoApi {
 	        
 	        location = new LocationData();
 	
-	        location.areaName = getDecode(getTextForTag(xpp, "areaName"));
-	        location.country = getDecode(getTextForTag(xpp, "country"));
-	        location.region = getDecode(getTextForTag(xpp, "region"));
+	        location.setAreaName(getDecode(getTextForTag(xpp, "areaName")));
+	        location.setCountry(getDecode(getTextForTag(xpp, "country")));
+	        location.setRegion(getDecode(getTextForTag(xpp, "region")));
 	        
 		} catch (Exception e) {
 			
@@ -88,15 +90,6 @@ public class LocationSearch extends WwoApi {
 			return this;
 		}
 	}
-	
-	class LocationData {
-		String areaName;
-		String country;
-		String region;
-		String latitude;
-		String longitude;
-		String population;
-		String weatherUrl;
-	}
+
 }
 

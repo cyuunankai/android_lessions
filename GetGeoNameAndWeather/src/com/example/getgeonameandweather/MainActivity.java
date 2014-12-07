@@ -16,8 +16,10 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.getgeonameandweather.LocalWeather.WeatherData;
-import com.example.getgeonameandweather.LocationSearch.LocationData;
+import com.example.getgeonameandweather.bean.LocationData;
+import com.example.getgeonameandweather.bean.Weather;
+import com.example.getgeonameandweather.bean.WeatherAndLocation;
+import com.example.getgeonameandweather.db.WildFishingDatabase;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -36,11 +38,14 @@ public class MainActivity extends ActionBarActivity {
 		weatherTextView = (TextView) findViewById(R.id.textView1);
 		geoTextView = (TextView) findViewById(R.id.textView2);
  		
+//		WildFishingDatabase wfd = new WildFishingDatabase(getApplicationContext());
+//		wfd.addWeather(new WeatherAndLocation());
+		
         // for debug (debug cannot get location by GPS,network...  etc)
-//        String qLocation = "41.73,123.47";
-//    	new RetrieveWeatherTask().execute(qLocation);
+        String qLocation = "41.73,123.47";
+    	new RetrieveWeatherTask().execute(qLocation);
     	
-    	registLocationListener();
+//    	registLocationListener();
 
 		
 	}
@@ -151,7 +156,7 @@ public class MainActivity extends ActionBarActivity {
 	    	//get weather
 	    	LocalWeather lw = new LocalWeather(true);
 			String query = (lw.new Params(lw.key)).setQ(locations[0]).setDate(getSystemDate()).getQueryString(LocalWeather.Params.class);
-			WeatherData weatherData = lw.callAPI(query);
+			Weather weatherData = lw.callAPI(query);
 			
 			//get location
 			LocationSearch ls = new LocationSearch(true);
@@ -165,8 +170,10 @@ public class MainActivity extends ActionBarActivity {
 	    }
 	    
 	    protected void onPostExecute(WeatherAndLocation wal) {
-	    	weatherTextView.setText(wal.getWeatherData().weather.maxtempC);
-	    	geoTextView.setText(wal.getLocationData().areaName);
+//	    	weatherTextView.setText(wal.getWeatherData().weather.maxtempC);
+//	    	geoTextView.setText(wal.getLocationData().areaName);
+	    	WildFishingDatabase wfd = new WildFishingDatabase(getApplicationContext());
+	    	wfd.addWeather(wal);
 	    	Log.i("", "");
 	    }
 

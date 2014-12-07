@@ -8,6 +8,10 @@ import org.xmlpull.v1.XmlPullParser;
 
 import android.util.Log;
 
+import com.example.getgeonameandweather.bean.Astronomy;
+import com.example.getgeonameandweather.bean.Hourly;
+import com.example.getgeonameandweather.bean.Weather;
+
 public class LocalWeather extends WwoApi {
 	public static final String FREE_API_ENDPOINT = "http://api.worldweatheronline.com/free/v2/weather.ashx";
 	public static final String PREMIUM_API_ENDPOINT = "http://api.worldweatheronline.com/premium/v1/premium-weather-V2.ashx";
@@ -21,50 +25,50 @@ public class LocalWeather extends WwoApi {
 		}
 	}
 	
-	WeatherData callAPI(String query) {
+	Weather callAPI(String query) {
 		return getLocalWeatherData(getInputStream(apiEndPoint + query));
 	}
 	
-	WeatherData getLocalWeatherData(InputStream is) {
-		WeatherData data = null;
+	Weather getLocalWeatherData(InputStream is) {
+		Weather weather = null;
 		
 		try {
 			Log.d("WWO", "getLocalWeatherData");
 			   
 	        XmlPullParser xpp = getXmlPullParser(is);
 	        
-	        data = new WeatherData();
-	        Weather weather = new Weather();
-	        Astronomy astronomy = new Astronomy();
-	        weather.astronomy = astronomy;
-	        List<Hourly> hourlyList = new ArrayList<Hourly>();
-	        weather.hourlyList = hourlyList;
-	        data.weather = weather;
-
-	        weather.date = getTextForTag(xpp, "date");
-	        weather.astronomy.sunrise = getTextForTag(xpp, "sunrise");
-	        weather.astronomy.sunset = getTextForTag(xpp, "sunset");
-	        weather.maxtempC = getTextForTag(xpp, "maxtempC");
-	        weather.mintempC = getTextForTag(xpp, "mintempC");
+	        weather = new Weather();
+	        weather.setDate(getTextForTag(xpp, "date"));
 	        
+	        Astronomy astronomy = new Astronomy();
+	        astronomy.setSunrise(getTextForTag(xpp, "sunrise"));
+	        astronomy.setSunset(getTextForTag(xpp, "sunset"));
+	        weather.setAstronomy(astronomy);
+	        
+	        weather.setDate(getTextForTag(xpp, "date"));
+	        weather.setMaxtempC(getTextForTag(xpp, "maxtempC"));
+	        weather.setMintempC(getTextForTag(xpp, "mintempC"));
+	        
+	        List<Hourly> hourlyList = new ArrayList<Hourly>();
 			for (int i = 0; i < 8; i++) {
 				Hourly hourly = new Hourly();
-				hourly.time = getTextForTag(xpp, "time");
-				hourly.tempC = getTextForTag(xpp, "tempC");
-				hourly.windspeedKmph = getTextForTag(xpp, "windspeedKmph");
-				hourly.winddirDegree = getTextForTag(xpp, "winddirDegree");
-				hourly.weatherCode = getTextForTag(xpp, "weatherCode");
-				hourly.pressure = getTextForTag(xpp, "pressure");
-				hourly.cloudcover = getTextForTag(xpp, "cloudcover");
+				hourly.setTime(getTextForTag(xpp, "time"));
+				hourly.setTempC(getTextForTag(xpp, "tempC"));
+				hourly.setWindspeedKmph(getTextForTag(xpp, "windspeedKmph"));
+				hourly.setWinddirDegree(getTextForTag(xpp, "winddirDegree"));
+				hourly.setWeatherCode(getTextForTag(xpp, "weatherCode"));
+				hourly.setPressure(getTextForTag(xpp, "pressure"));
+				hourly.setCloudcover(getTextForTag(xpp, "cloudcover"));
 
 				hourlyList.add(hourly);
 			}
+			weather.setHourlyList(hourlyList);
 	        
 		} catch (Exception e) {
 			Log.i("", "" + e);
 		}
 	
-		return data;
+		return weather;
 	}
 	
 	class Params extends RootParams {
@@ -133,68 +137,6 @@ public class LocalWeather extends WwoApi {
 			this.key = key;
 			return this;
 		}
-	}
-	
-	class WeatherData {
-		Request request;
-		Weather weather;
-	}
-	
-	class Request {
-		String type;
-		String query;
-	}
-
-//	class CurrentCondition {
-//	    String observation_time;
-//	    String temp_C;
-//	    String weatherCode;
-//	    String weatherIconUrl;
-//	    String weatherDesc;
-//	    String windspeedMiles;
-//	    String windspeedKmph;
-//	    String winddirDegree;
-//	    String winddir16Point;
-//	    String precipMM;
-//	    String humidity;
-//	    String visibility;
-//	    String pressure;
-//	    String cloudcover;
-//	}
-
-	class Weather {
-	    String date;
-	    Astronomy astronomy;
-	    List<Hourly> hourlyList;
-	    String maxtempC;
-	    String mintempC;
-//	    String tempMaxC;
-//	    String tempMaxF;
-//	    String tempMinC;
-//	    String tempMinF;
-//	    String windspeedMiles;
-//	    String windspeedKmph;
-//	    String winddirection;
-//	    String weatherCode;
-//	    String weatherIconUrl;
-//	    String weatherDesc;
-//	    String precipMM;
-	}
-	
-	class Astronomy {
-		String sunrise;
-		String sunset;
-	}
-	
-	class Hourly {
-		String time;
-		String tempC;
-		String windspeedKmph;
-		String winddirDegree;
-		String pressure;
-		String cloudcover;
-		String weatherCode;
-		String weatherName;
 	}
 }
 
