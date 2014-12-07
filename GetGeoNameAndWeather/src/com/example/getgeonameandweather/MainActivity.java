@@ -23,20 +23,22 @@ public class MainActivity extends ActionBarActivity {
 
 	LocationManager locationManager;
 	Location location;
-    boolean network_enabled=false;
-	TextView editLocation;
-	TextView condition;
 	LocationListener locationListener;
+	boolean network_enabled=false;
+	
+	TextView weatherTextView;
+	TextView geoTextView;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-        editLocation = (TextView) findViewById(R.id.textView1);
+		weatherTextView = (TextView) findViewById(R.id.textView1);
+		geoTextView = (TextView) findViewById(R.id.textView2);
  		
         // for debug (debug cannot get location by GPS,network...  etc)
-        String qLocation = "41.73,123.47";
-    	new RetrieveWeatherTask().execute(qLocation);
+//        String qLocation = "41.73,123.47";
+//    	new RetrieveWeatherTask().execute(qLocation);
     	
     	registLocationListener();
 
@@ -163,6 +165,8 @@ public class MainActivity extends ActionBarActivity {
 	    }
 	    
 	    protected void onPostExecute(WeatherAndLocation wal) {
+	    	weatherTextView.setText(wal.getWeatherData().weather.maxtempC);
+	    	geoTextView.setText(wal.getLocationData().areaName);
 	    	Log.i("", "");
 	    }
 
