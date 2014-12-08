@@ -173,7 +173,7 @@ public class MainActivity extends ActionBarActivity {
 //	    	weatherTextView.setText(wal.getWeatherData().weather.maxtempC);
 //	    	geoTextView.setText(wal.getLocationData().areaName);
 	    	WildFishingDatabase wfd = new WildFishingDatabase(getApplicationContext());
-	    	wfd.addWeather(wal);
+	    	wfd.addWeatherData(wal);
 	    	Log.i("", "");
 	    }
 

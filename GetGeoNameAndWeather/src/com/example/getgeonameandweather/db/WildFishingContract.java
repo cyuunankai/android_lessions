@@ -7,6 +7,7 @@ public class WildFishingContract {
 	public static abstract class Weathers implements BaseColumns {
         public static final String TABLE_NAME = "weathers";
         public static final String COLUMN_NAME_DATE = "date";
+        public static final String COLUMN_NAME_REGION = "region";
         public static final String COLUMN_NAME_MIN_TEMP_C = "min_temp_c";
         public static final String COLUMN_NAME_MAX_TEMP_C = "max_temp_c";
         public static final String COLUMN_NAME_SUNRISE = "sunrise";

@@ -1,16 +1,16 @@
 package com.example.getgeonameandweather;
 
-import com.example.getgeonameandweather.LocalWeather.WeatherData;
-import com.example.getgeonameandweather.LocationSearch.LocationData;
+import com.example.getgeonameandweather.bean.LocationData;
+import com.example.getgeonameandweather.bean.Weather;
 
 public class WeatherAndLocation {
 
-	private WeatherData weatherData;
+	private Weather weatherData;
 	private LocationData locationData;
-	public WeatherData getWeatherData() {
+	public Weather getWeatherData() {
 		return weatherData;
 	}
-	public void setWeatherData(WeatherData weatherData) {
+	public void setWeatherData(Weather weatherData) {
 		this.weatherData = weatherData;
 	}
 	public LocationData getLocationData() {

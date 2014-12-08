@@ -45,7 +45,6 @@ public class LocalWeather extends WwoApi {
 	        astronomy.setSunset(getTextForTag(xpp, "sunset"));
 	        weather.setAstronomy(astronomy);
 	        
-	        weather.setDate(getTextForTag(xpp, "date"));
 	        weather.setMaxtempC(getTextForTag(xpp, "maxtempC"));
 	        weather.setMintempC(getTextForTag(xpp, "mintempC"));
 	        
@@ -64,6 +63,7 @@ public class LocalWeather extends WwoApi {
 			}
 			weather.setHourlyList(hourlyList);
 	        
+			Log.i("", "");
 		} catch (Exception e) {
 			Log.i("", "" + e);
 		}
