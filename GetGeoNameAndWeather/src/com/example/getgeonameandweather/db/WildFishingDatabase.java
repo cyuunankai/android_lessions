@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -81,6 +82,30 @@ public class WildFishingDatabase {
 	    	         null,
 	    	         values);
     	}
+    }
+    
+    public String getWeathers(){
+    	SQLiteDatabase db = mDatabaseOpenHelper.getReadableDatabase();
+    	String[] projection = {
+    			WildFishingContract.Weathers._ID,
+    			WildFishingContract.Weathers.COLUMN_NAME_DATE
+    		    };
+
+    	String sortOrder =
+    			WildFishingContract.Weathers._ID + " DESC";
+
+    		Cursor c = db.query(
+    				WildFishingContract.Weathers.TABLE_NAME,  // The table to query
+    		    projection,                               // The columns to return
+    		    null,                                // The columns for the WHERE clause
+    		    null,                            // The values for the WHERE clause
+    		    null,                                     // don't group the rows
+    		    null,                                     // don't filter by row groups
+    		    sortOrder                                 // The sort order
+    		    );
+    		
+    		c.moveToFirst();
+    		return c.getString(0) + " : " + c.getString(1);
     }
 
     /**

@@ -46,8 +46,8 @@ public class WwoApi {
 		return this;
 	}
 	
-	class RootParams {
-		String getQueryString(Class cls) {
+	public class RootParams {
+		public String getQueryString(Class cls) {
 			String query = null;
 			
 			Field[] fields = cls.getDeclaredFields();

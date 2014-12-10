@@ -12,7 +12,7 @@ public class LocationSearch extends WwoApi {
 	public static final String FREE_API_ENDPOINT = "http://api.worldweatheronline.com/free/v2/search.ashx";
 	public static final String PREMIUM_API_ENDPOINT = "http://api.worldweatheronline.com/free/v1/search.ashx";
 	
-	LocationSearch(boolean freeAPI) {
+	public LocationSearch(boolean freeAPI) {
 		super(freeAPI);
 		
 		if(freeAPI) {
@@ -22,11 +22,11 @@ public class LocationSearch extends WwoApi {
 		}
 	}
 
-	LocationData callAPI(String query) {
+	public LocationData callAPI(String query) {
 		return getLocationSearchData(getInputStream(apiEndPoint + query));
 	}
 	
-	LocationData getLocationSearchData(InputStream is) {
+	public LocationData getLocationSearchData(InputStream is) {
 		LocationData location = null;
 		
 		try {
@@ -47,7 +47,7 @@ public class LocationSearch extends WwoApi {
 		return location;
 	}
 	
-	class Params extends RootParams {
+	public class Params extends RootParams {
 		String query;					//required
 		String num_of_results="1";
 		String timezone;
@@ -55,12 +55,12 @@ public class LocationSearch extends WwoApi {
 		String format;				//default "xml"
 		String key;					//required
 		
-		Params(String key) {
+		public Params(String key) {
 			num_of_results = "1";
 			this.key = key;
 		}
 		
-		Params setQuery(String query) {
+		public Params setQuery(String query) {
 			this.query = query;
 			return this;
 		}

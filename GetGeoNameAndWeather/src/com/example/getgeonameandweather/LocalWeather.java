@@ -16,7 +16,7 @@ public class LocalWeather extends WwoApi {
 	public static final String FREE_API_ENDPOINT = "http://api.worldweatheronline.com/free/v2/weather.ashx";
 	public static final String PREMIUM_API_ENDPOINT = "http://api.worldweatheronline.com/premium/v1/premium-weather-V2.ashx";
 
-	LocalWeather(boolean freeAPI) {
+	public LocalWeather(boolean freeAPI) {
 		super(freeAPI);
 		if(freeAPI) {
 			apiEndPoint = FREE_API_ENDPOINT;
@@ -25,7 +25,7 @@ public class LocalWeather extends WwoApi {
 		}
 	}
 	
-	Weather callAPI(String query) {
+	public Weather callAPI(String query) {
 		return getLocalWeatherData(getInputStream(apiEndPoint + query));
 	}
 	
@@ -71,7 +71,7 @@ public class LocalWeather extends WwoApi {
 		return weather;
 	}
 	
-	class Params extends RootParams {
+	public class Params extends RootParams {
 		String q;					//required
 		String extra;
 		String num_of_days="1";		//required
@@ -83,11 +83,11 @@ public class LocalWeather extends WwoApi {
 		String callback;
 		String key;					//required
 		
-		Params(String key) {
+		public Params(String key) {
 			this.key = key;
 		}
 		
-		Params setQ(String q) {
+		public Params setQ(String q) {
 			this.q = q;
 			return this;
 		}
@@ -102,7 +102,7 @@ public class LocalWeather extends WwoApi {
 			return this;
 		}
 		
-		Params setDate(String date) {
+		public Params setDate(String date) {
 			this.date = date;
 			return this;
 		}
@@ -133,9 +133,13 @@ public class LocalWeather extends WwoApi {
 			return this;
 		}
 		
-		Params setKey(String key) {
+		public Params setKey(String key) {
 			this.key = key;
 			return this;
+		}
+		
+		public String getKey(){
+			return this.key;
 		}
 	}
 }

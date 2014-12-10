@@ -3,16 +3,22 @@ package com.example.getgeonameandweather;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +26,7 @@ import com.example.getgeonameandweather.bean.LocationData;
 import com.example.getgeonameandweather.bean.Weather;
 import com.example.getgeonameandweather.bean.WeatherAndLocation;
 import com.example.getgeonameandweather.db.WildFishingDatabase;
+import com.example.getgeonameandweather.schdule.AlarmManagerBroadcastReceiver;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -31,6 +38,8 @@ public class MainActivity extends ActionBarActivity {
 	TextView weatherTextView;
 	TextView geoTextView;
 	
+	private AlarmManagerBroadcastReceiver alarm;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -38,19 +47,62 @@ public class MainActivity extends ActionBarActivity {
 		weatherTextView = (TextView) findViewById(R.id.textView1);
 		geoTextView = (TextView) findViewById(R.id.textView2);
  		
+		alarm = new AlarmManagerBroadcastReceiver();
 //		WildFishingDatabase wfd = new WildFishingDatabase(getApplicationContext());
 //		wfd.addWeather(new WeatherAndLocation());
 		
         // for debug (debug cannot get location by GPS,network...  etc)
-        String qLocation = "41.73,123.47";
-    	new RetrieveWeatherTask().execute(qLocation);
+//        String qLocation = "41.73,123.47";
+//    	new RetrieveWeatherTask().execute(qLocation);
     	
 //    	registLocationListener();
 
 		
 	}
 	
-	private void registLocationListener() {
+	public void startSchdule(View view){
+		alarm.SetAlarm(getApplicationContext());
+	}
+	
+	public void showWeather(View view){
+		WildFishingDatabase wfd = new WildFishingDatabase(this);
+		Toast.makeText(getBaseContext(), wfd.getWeathers(),
+				Toast.LENGTH_SHORT).show();
+		
+	}
+	
+	public void noficate(View view){
+		NotificationCompat.Builder mBuilder =
+		        new NotificationCompat.Builder(this)
+		        .setSmallIcon(R.drawable.abc_ab_bottom_solid_dark_holo)
+		        .setContentTitle("My notification")
+		        .setContentText("Hello World!");
+		// Creates an explicit intent for an Activity in your app
+		Intent resultIntent = new Intent(this, ResultActivity.class);
+
+		// The stack builder object will contain an artificial back stack for the
+		// started Activity.
+		// This ensures that navigating backward from the Activity leads out of
+		// your application to the Home screen.
+		TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+		// Adds the back stack for the Intent (but not the Intent itself)
+		stackBuilder.addParentStack(ResultActivity.class);
+		// Adds the Intent that starts the Activity to the top of the stack
+		stackBuilder.addNextIntent(resultIntent);
+		PendingIntent resultPendingIntent =
+		        stackBuilder.getPendingIntent(
+		            0,
+		            PendingIntent.FLAG_UPDATE_CURRENT
+		        );
+		mBuilder.setContentIntent(resultPendingIntent);
+		NotificationManager mNotificationManager =
+		    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+		// mId allows you to update the notification later on.
+		mNotificationManager.notify(1, mBuilder.build());
+
+	}
+	
+	public void registLocationListener() {
 		
 		boolean network_enabled=false;
 
