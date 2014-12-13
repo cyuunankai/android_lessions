@@ -29,6 +29,7 @@ import com.example.getgeonameandweather.bean.LocationData;
 import com.example.getgeonameandweather.bean.Weather;
 import com.example.getgeonameandweather.bean.WeatherAndLocation;
 import com.example.getgeonameandweather.db.WildFishingDatabase;
+import com.example.getgeonameandweather.service.SaveWeatherAndLocationService;
 
 
 public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
@@ -41,20 +42,23 @@ public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
 	
 	@Override
 	public void onReceive(Context context, Intent intent) {
+		 
+		
 		 PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
          PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "YOUR TAG");
          //Acquire the lock
          wl.acquire();
          mContext = context;
-         registLocationListener(mContext);
-         
+//         registLocationListener(mContext);
+         Intent i = new Intent(context, SaveWeatherAndLocationService.class);
+         context.startService(i);
          // for debug
 //	     String qLocation = "41.73,123.47";
 //	   	 new RetrieveWeatherTask().execute(qLocation);
          //Release the lock
          wl.release();
          
-//         CancelAlarm(mContext);
+//         CancelAlarm(context);
          
 	}
 	
@@ -62,7 +66,7 @@ public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
     {
 		Calendar calendar = Calendar.getInstance();
 
-		calendar.set(Calendar.HOUR_OF_DAY, 20); // For 20 AM
+		calendar.set(Calendar.HOUR_OF_DAY, 21); // For 20 AM
 		calendar.set(Calendar.MINUTE, 0);
 		calendar.set(Calendar.SECOND, 0);
 		
@@ -76,7 +80,7 @@ public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
 		// for debug
 //		AlarmManager am=(AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
 //        Intent intent = new Intent(context, AlarmManagerBroadcastReceiver.class);
-//        PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, 0);
+//        PendingIntent pi = PendingIntent.getBroadcast(context, 1, intent, 0);
 //        //After after 30 seconds
 //        am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 1000 * 15 , pi); 
     }
