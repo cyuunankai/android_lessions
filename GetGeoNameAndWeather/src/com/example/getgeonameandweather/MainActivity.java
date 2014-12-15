@@ -1,6 +1,7 @@
 package com.example.getgeonameandweather;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import android.app.NotificationManager;
@@ -12,6 +13,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.ActionBarActivity;
@@ -19,6 +21,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +29,10 @@ import com.example.getgeonameandweather.bean.LocationData;
 import com.example.getgeonameandweather.bean.Weather;
 import com.example.getgeonameandweather.bean.WeatherAndLocation;
 import com.example.getgeonameandweather.db.WildFishingDatabase;
+import com.example.getgeonameandweather.history.DatePickerFragment;
 import com.example.getgeonameandweather.schdule.AlarmManagerBroadcastReceiver;
+import com.example.getgeonameandweather.service.HistoryWeatherService;
+import com.example.getgeonameandweather.utils.StringUtils;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -57,7 +63,7 @@ public class MainActivity extends ActionBarActivity {
     	
 //    	registLocationListener();
 
-		
+		setDateBtnText();
 	}
 	
 	public void startSchdule(View view){
@@ -69,6 +75,45 @@ public class MainActivity extends ActionBarActivity {
 		Toast.makeText(getBaseContext(), wfd.getWeathers(),
 				Toast.LENGTH_SHORT).show();
 		
+	}
+	
+	private void setDateBtnText(){
+		final Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        
+        Button startDateBtn = (Button)findViewById(R.id.startBtn);
+        startDateBtn.setText(year + "/" +StringUtils.leftPadTwo(month + 1) + "/" + StringUtils.leftPadTwo(day));
+		
+		Button endDateBtn = (Button)findViewById(R.id.endBtn);
+		endDateBtn.setText(year + "/" +StringUtils.leftPadTwo(month + 1) + "/" + StringUtils.leftPadTwo(day));
+	}
+	
+	public void showStartDatePickerDialog(View v) {
+		Button b = (Button)v;
+		
+	    DialogFragment newFragment = new DatePickerFragment(b);
+	    newFragment.show(getSupportFragmentManager(), "startDatePicker");
+	}
+	
+	public void showEndDatePickerDialog(View v) {
+		Button b = (Button)v;
+		
+	    DialogFragment newFragment = new DatePickerFragment(b);
+	    newFragment.show(getSupportFragmentManager(), "endDatePicker");
+	}
+	
+	public void importHistoryWeather(View v) {
+		Button startDateBtn = (Button)findViewById(R.id.startBtn);
+		Button endDateBtn = (Button)findViewById(R.id.endBtn);
+		String startDateStr = startDateBtn.getText().toString();
+		String endDateStr = endDateBtn.getText().toString();
+		
+		Intent i = new Intent(this, HistoryWeatherService.class);
+		i.putExtra("startDateStr", startDateStr);
+		i.putExtra("endDateStr", endDateStr);
+		startService(i);
 	}
 	
 	public void noficate(View view){

@@ -32,6 +32,7 @@
         <receiver android:name=".schdule.AlarmManagerBroadcastReceiver" >
         </receiver>
         <service android:name=".service.SaveWeatherAndLocationService"></service>
+        <service android:name=".service.HistoryWeatherService"></service>
 
         <activity
             android:name=".ResultActivity"

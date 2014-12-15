@@ -13,6 +13,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
@@ -28,6 +29,8 @@ import com.example.getgeonameandweather.db.WildFishingDatabase;
 
 public class SaveWeatherAndLocationService extends IntentService {
 	
+	Handler mMainThreadHandler = null;
+	
 	LocationManager locationManager;
 	LocationListener locationListener;
 	boolean network_enabled=false;
@@ -38,6 +41,8 @@ public class SaveWeatherAndLocationService extends IntentService {
 	   */
 	  public SaveWeatherAndLocationService() {
 	      super("SaveWeatherAndLocationService");
+	      
+	      mMainThreadHandler = new Handler();
 	  }
 
 	  /**
@@ -47,9 +52,12 @@ public class SaveWeatherAndLocationService extends IntentService {
 	   */
 	  @Override
 	  protected void onHandleIntent(Intent intent) {
-		  registLocationListener();
-//		     String qLocation = "41.73,123.47";
-//		   	 new RetrieveWeatherTask().execute(qLocation);
+		  mMainThreadHandler.post(new Runnable() {
+	            @Override
+	            public void run() {
+	            	registLocationListener();
+	            }
+	        });
 	  }
 	  
 	  public void registLocationListener() {
@@ -139,8 +147,6 @@ public class SaveWeatherAndLocationService extends IntentService {
 		    }
 		    
 		    protected void onPostExecute(WeatherAndLocation wal) {
-//		    	weatherTextView.setText(wal.getWeatherData().weather.maxtempC);
-//		    	geoTextView.setText(wal.getLocationData().areaName);
 		    	WildFishingDatabase wfd = new WildFishingDatabase(getApplicationContext());
 		    	wfd.addWeatherData(wal);
 		    	

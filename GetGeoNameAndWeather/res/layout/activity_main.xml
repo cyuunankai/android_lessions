@@ -22,7 +22,7 @@
         android:layout_below="@+id/textView1"
         android:layout_marginTop="29dp"
         android:onClick="startSchdule"
-        android:text="Button" />
+        android:text="启动schdule" />
 
     <TextView
         android:id="@+id/textView2"
@@ -41,5 +41,35 @@
         android:layout_centerVertical="true"
         android:onClick="showWeather"
         android:text="显示数据" />
+
+    <Button
+        android:id="@+id/startBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/button2"
+        android:layout_below="@+id/button2"
+        android:layout_marginTop="44dp"
+        android:onClick="showStartDatePickerDialog"
+        android:text="开始日期" />
+
+    <Button
+        android:id="@+id/endBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/startBtn"
+        android:layout_below="@+id/startBtn"
+        android:layout_marginTop="18dp"
+        android:onClick="showEndDatePickerDialog"
+        android:text="结束日期" />
+
+    <Button
+        android:id="@+id/importBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/endBtn"
+        android:layout_alignBottom="@+id/endBtn"
+        android:layout_toRightOf="@+id/button1"
+        android:onClick="importHistoryWeather"
+        android:text="导入历史数据" />
 
 </RelativeLayout>
