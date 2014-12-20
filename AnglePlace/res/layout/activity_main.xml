@@ -8,32 +8,90 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.angleplace.MainActivity" >
 
-    <ImageView
-        android:id="@+id/imgView"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/editTextTitle"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="39dp"
-        android:layout_marginTop="30dp"/>
+        android:layout_marginLeft="44dp"
+        android:layout_marginTop="36dp"
+        android:ems="10" >
 
+        <requestFocus />
+    </EditText>
+    
+    <EditText
+        android:id="@+id/editTextDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/editTextTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="44dp"
+        android:layout_marginTop="50dp"
+        android:ems="10"
+        android:inputType="textMultiLine" >
+    </EditText>
+    
     <Button
         android:id="@+id/buttonLoadPicture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_alignTop="@+id/editTextDetail"
+        android:layout_marginTop="80dp"
         android:layout_centerHorizontal="true"
         android:text="选择图片" />
-
+    
+    <ImageView
+     android:id="@+id/imgView"
+     android:layout_width="wrap_content"
+     android:layout_height="200dp"
+     android:layout_alignTop="@+id/buttonLoadPicture"
+     android:layout_marginTop="80dp"
+     android:layout_centerVertical="true"
+     android:adjustViewBounds="true"
+     android:scaleType="centerInside"
+      />
+    
+    
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/buttonSavePlace"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/buttonLoadPicture"
-        android:layout_alignBottom="@+id/buttonLoadPicture"
+        android:layout_alignParentBottom="true"
         android:layout_marginLeft="18dp"
-        android:layout_toRightOf="@+id/buttonLoadPicture"
-        android:onClick="saveImage"
-        android:text="保存图片" />
+        android:onClick="savePlace"
+        android:text="保存" />
+    
+    <Button
+        android:id="@+id/buttonShowPlace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="88dp"
+        android:onClick="showPlace"
+        android:text="取得" />
+    
+    <Button
+        android:id="@+id/buttonUpdatePlace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="158dp"
+        android:onClick="updatePlace"
+        android:text="更新" />
+    
+    <Button
+        android:id="@+id/buttonDeletePlace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="228dp"
+        android:onClick="deletePlace"
+        android:text="删除" />
+
+
+
+    
 
 </RelativeLayout>

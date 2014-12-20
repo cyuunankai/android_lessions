@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -15,17 +16,27 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+
+import com.example.angleplace.bean.Place;
+import com.example.angleplace.db.WildFishingDatabase;
 
 public class MainActivity extends ActionBarActivity {
 
 	private static int RESULT_LOAD_IMAGE = 1;
+	private static String PLACE_IMAGE_PATH = "/placeImages/";
 	Bitmap b;
+	WildFishingDatabase db;
+	String dbPlaceId;
+	String dbFileName;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		db = new WildFishingDatabase(getApplicationContext());
 		
 		Button buttonLoadImage = (Button) findViewById(R.id.buttonLoadPicture);
         buttonLoadImage.setOnClickListener(new View.OnClickListener() {
@@ -58,16 +69,81 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 	
-	public void saveImage(View v){
-		saveToInternalStorage(b);
+	public void savePlace(View v){
+		
+		EditText etTitle = (EditText) findViewById(R.id.editTextTitle);
+		EditText etDetail = (EditText) findViewById(R.id.editTextDetail);
+		String title = etTitle.getText().toString();
+		String detail = etDetail.getText().toString();
+		
+		String fileName = saveToInternalStorage(b);
+		
+		SavePlaceToDB(fileName, title, detail);
 	}
 	
-	public void saveToInternalStorage(Bitmap outputImage){
+	public void updatePlace(View v){
+		
+		EditText etTitle = (EditText) findViewById(R.id.editTextTitle);
+		EditText etDetail = (EditText) findViewById(R.id.editTextDetail);
+		String title = etTitle.getText().toString();
+		String detail = etDetail.getText().toString();
+		
+		// ɾ��֮ǰͼƬ
+		File storagePath = new File(getApplicationContext().getFilesDir() + PLACE_IMAGE_PATH); 
+        File myImage = new File(storagePath, dbFileName);
+        myImage.delete();
+        
+		String fileName = saveToInternalStorage(b);
+		
+		Place place = new Place();
+		place.setId(dbPlaceId);
+		place.setTitle(title);
+		place.setDetail(detail);
+		place.setFileName(fileName);
+		db.updatePlace(place);
+	}
+	
+	public void deletePlace(View v){
+		
+		// ɾ��֮ǰͼƬ
+		File storagePath = new File(getApplicationContext().getFilesDir() + PLACE_IMAGE_PATH); 
+        File myImage = new File(storagePath, dbFileName);
+        myImage.delete();
+        
+		db.deletePlace(dbPlaceId);
+	}
+	
+	public void showPlace(View v){
+		Place place = db.getPlaceById("1");
+		dbPlaceId = place.getId();
+		dbFileName = place.getFileName();
+		
+		EditText etTitle = (EditText) findViewById(R.id.editTextTitle);
+		EditText etDetail = (EditText) findViewById(R.id.editTextDetail);
+		ImageView imageView = (ImageView) findViewById(R.id.imgView);
+		
+		etTitle.setText(place.getTitle());
+		etDetail.setText(place.getDetail());
+		String pathName = getApplicationContext().getFilesDir() + PLACE_IMAGE_PATH + place.getFileName();
+		imageView.setImageBitmap(BitmapFactory.decodeFile(pathName));
+	}
 
-        File storagePath = new File(getApplicationContext().getFilesDir() + "/MyPhotos/"); 
+	private void SavePlaceToDB(String fileName, String title, String detail) {
+		Place place = new Place();
+		place.setTitle(title);
+		place.setDetail(detail);
+		place.setFileName(fileName);
+		db.addPlace(place);
+	}
+	
+	private String saveToInternalStorage(Bitmap outputImage){
+		
+		String fileName = Long.toString(System.currentTimeMillis()) + ".jpg";
+		
+        File storagePath = new File(getApplicationContext().getFilesDir() + PLACE_IMAGE_PATH); 
         storagePath.mkdirs(); 
 
-        File myImage = new File(storagePath, Long.toString(System.currentTimeMillis()) + ".jpg");
+        File myImage = new File(storagePath, fileName);
 
         try { 
             FileOutputStream out = new FileOutputStream(myImage); 
@@ -75,8 +151,10 @@ public class MainActivity extends ActionBarActivity {
             out.flush();    
             out.close();
         } catch (Exception e) { 
-            e.printStackTrace(); 
-        }               
+        	fileName = null;
+        }
+        
+        return fileName;
     }
 
 	@Override
