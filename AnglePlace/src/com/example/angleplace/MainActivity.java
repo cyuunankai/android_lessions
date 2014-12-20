@@ -20,12 +20,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.example.angleplace.bean.Place;
+import com.example.angleplace.common.Constant;
 import com.example.angleplace.db.WildFishingDatabase;
 
 public class MainActivity extends ActionBarActivity {
 
 	private static int RESULT_LOAD_IMAGE = 1;
-	private static String PLACE_IMAGE_PATH = "/placeImages/";
 	Bitmap b;
 	WildFishingDatabase db;
 	String dbPlaceId;
@@ -89,9 +89,14 @@ public class MainActivity extends ActionBarActivity {
 		String detail = etDetail.getText().toString();
 		
 		// ɾ��֮ǰͼƬ
-		File storagePath = new File(getApplicationContext().getFilesDir() + PLACE_IMAGE_PATH); 
-        File myImage = new File(storagePath, dbFileName);
-        myImage.delete();
+		if (dbFileName != null) {
+			File storagePath = new File(getApplicationContext().getFilesDir()
+					+ Constant.PLACE_IMAGE_PATH);
+			File myImage = new File(storagePath, dbFileName);
+			if (myImage.exists()) {
+				myImage.delete();
+			}
+		}
         
 		String fileName = saveToInternalStorage(b);
 		
@@ -106,7 +111,7 @@ public class MainActivity extends ActionBarActivity {
 	public void deletePlace(View v){
 		
 		// ɾ��֮ǰͼƬ
-		File storagePath = new File(getApplicationContext().getFilesDir() + PLACE_IMAGE_PATH); 
+		File storagePath = new File(getApplicationContext().getFilesDir() + Constant.PLACE_IMAGE_PATH); 
         File myImage = new File(storagePath, dbFileName);
         myImage.delete();
         
@@ -124,7 +129,7 @@ public class MainActivity extends ActionBarActivity {
 		
 		etTitle.setText(place.getTitle());
 		etDetail.setText(place.getDetail());
-		String pathName = getApplicationContext().getFilesDir() + PLACE_IMAGE_PATH + place.getFileName();
+		String pathName = getApplicationContext().getFilesDir() + Constant.PLACE_IMAGE_PATH + place.getFileName();
 		imageView.setImageBitmap(BitmapFactory.decodeFile(pathName));
 	}
 
@@ -140,7 +145,7 @@ public class MainActivity extends ActionBarActivity {
 		
 		String fileName = Long.toString(System.currentTimeMillis()) + ".jpg";
 		
-        File storagePath = new File(getApplicationContext().getFilesDir() + PLACE_IMAGE_PATH); 
+        File storagePath = new File(getApplicationContext().getFilesDir() + Constant.PLACE_IMAGE_PATH); 
         storagePath.mkdirs(); 
 
         File myImage = new File(storagePath, fileName);

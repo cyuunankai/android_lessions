@@ -105,6 +105,24 @@ public class WildFishingDatabase {
 		place.setFileName(c.getString(c.getColumnIndex(WildFishingContract.Places.COLUMN_NAME_FILE_NAME)));
 		return place;
 	}
+	
+	public Cursor getPlaceForPinner() {
+		SQLiteDatabase db = mDatabaseOpenHelper.getReadableDatabase();
+		
+		String[] projection = { WildFishingContract.Places._ID,
+				WildFishingContract.Places.COLUMN_NAME_TITLE};
+
+		Cursor c = db.query(WildFishingContract.Places.TABLE_NAME, // The table to query
+				projection, // The columns to return
+				null, // The columns for the WHERE clause
+				null, // The values for the WHERE clause
+				null, // don't group the rows
+				null, // don't filter by row groups
+				null // The sort order
+				);
+		
+		return c;
+	}
 
     /**
      * This creates/opens the database.
