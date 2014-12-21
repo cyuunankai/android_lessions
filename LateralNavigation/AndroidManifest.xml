@@ -15,14 +15,16 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".CollectionDemoActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:uiOptions="splitActionBarWhenNarrow">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <meta-data android:name="android.support.UI_OPTIONS"
+                android:value="splitActionBarWhenNarrow" />
         </activity>
-        
         <activity
             android:name=".Tab1Activity"
             android:label="title_activity_tab1" >
@@ -42,6 +44,10 @@
         <activity
             android:name=".Tab5Activity"
             android:label="title_activity_tab5" >
+        </activity>
+        <activity
+            android:name=".TopActionBarActivity"
+            android:label="@string/title_activity_top_action_bar" >
         </activity>
     </application>
 

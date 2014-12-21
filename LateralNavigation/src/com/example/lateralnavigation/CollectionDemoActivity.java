@@ -10,6 +10,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.example.lateralnavigation.tabs.Tab1Fragment;
 import com.example.lateralnavigation.tabs.Tab2Fragment;
@@ -55,7 +57,15 @@ public class CollectionDemoActivity extends ActionBarActivity {
 		// 设定tab选中监听器
 		final ActionBar bar = getActionBar();
 		addTabAndSetTabListener(bar);
-
+		
+		bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM);
+		
+		View view = View.inflate(getApplicationContext(), R.layout.activity_top_action_bar,
+	            null);
+	    bar.setCustomView(view);
+	    
+		
+		
 		// 初始化手势横向滑动监听器
 		initViewPagerPageChangeListener(bar);
 
@@ -72,7 +82,6 @@ public class CollectionDemoActivity extends ActionBarActivity {
 	 */
 	private void addTabAndSetTabListener(ActionBar bar){
 		bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-		bar.setDisplayOptions(0, ActionBar.DISPLAY_SHOW_TITLE);
 		
 		ActionBar.TabListener tabListener = getTabListener();
 		bar.addTab(bar.newTab().setText("tab1111111").setTabListener(tabListener));
