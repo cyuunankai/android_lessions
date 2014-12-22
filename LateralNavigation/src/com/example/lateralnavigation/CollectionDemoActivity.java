@@ -2,16 +2,18 @@ package com.example.lateralnavigation;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.RelativeLayout;
+import android.view.ViewGroup;
 
 import com.example.lateralnavigation.tabs.Tab1Fragment;
 import com.example.lateralnavigation.tabs.Tab2Fragment;
@@ -45,7 +47,11 @@ public class CollectionDemoActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		// 肖像模式
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		// setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE); // 风景模式
 		setContentView(R.layout.activity_collection_demo);
+		
 
 		mMyFragmentStatePagerAdapter = new MyFragmentStatePagerAdapter(getSupportFragmentManager());
 		mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -60,21 +66,28 @@ public class CollectionDemoActivity extends ActionBarActivity {
 		
 		bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM);
 		
-		View view = View.inflate(getApplicationContext(), R.layout.activity_top_action_bar,
-	            null);
-	    bar.setCustomView(view);
+//		View view = View.inflate(getApplicationContext(), R.layout.activity_top_action_bar,
+//	            null);
+//	    bar.setCustomView(view);
 	    
-		
+	    ViewGroup view = (ViewGroup)LayoutInflater.from(this)
+	            .inflate(R.layout.activity_top_action_bar, null);
+//	    bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM,
+//	                ActionBar.DISPLAY_SHOW_CUSTOM);
+	    bar.setCustomView(view,
+	                new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,
+	                        ActionBar.LayoutParams.WRAP_CONTENT,
+	                        Gravity.CENTER_VERTICAL | Gravity.RIGHT));
 		
 		// 初始化手势横向滑动监听器
 		initViewPagerPageChangeListener(bar);
-
+		
 		if (savedInstanceState != null) {
 			// 初始化选中第一个tab
 			bar.setSelectedNavigationItem(savedInstanceState.getInt("tab", 0));
 		}
-
 	}
+	
 	
 	/**
 	 * 添加tab
@@ -84,11 +97,11 @@ public class CollectionDemoActivity extends ActionBarActivity {
 		bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		
 		ActionBar.TabListener tabListener = getTabListener();
-		bar.addTab(bar.newTab().setText("tab1111111").setTabListener(tabListener));
-		bar.addTab(bar.newTab().setText("tab2222222").setTabListener(tabListener));
-		bar.addTab(bar.newTab().setText("tab3333333").setTabListener(tabListener));
-		bar.addTab(bar.newTab().setText("tab4444444").setTabListener(tabListener));
-		bar.addTab(bar.newTab().setText("tab5555555").setTabListener(tabListener));
+		bar.addTab(bar.newTab().setText("tab1").setTabListener(tabListener));
+		bar.addTab(bar.newTab().setText("tab2").setTabListener(tabListener));
+		bar.addTab(bar.newTab().setText("tab3").setTabListener(tabListener));
+		bar.addTab(bar.newTab().setText("tab4").setTabListener(tabListener));
+		bar.addTab(bar.newTab().setText("tab5").setTabListener(tabListener));
 	}
 	
 	/**
