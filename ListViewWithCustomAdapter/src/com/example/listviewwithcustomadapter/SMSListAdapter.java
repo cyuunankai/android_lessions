@@ -23,9 +23,17 @@ public class SMSListAdapter  extends ArrayAdapter< MyMenuItem >
     private Context mContext;
     
     private RadioButton mSelectedRB;
-    private int mSelectedPosition = -1;
+    private String selectText;
     
-    public SMSListAdapter(Context context,int resource , int textViewResourceId , List < MyMenuItem > data ) 
+    public String getSelectText() {
+		return selectText;
+	}
+
+	public void setSelectText(String selectText) {
+		this.selectText = selectText;
+	}
+
+	public SMSListAdapter(Context context,int resource , int textViewResourceId , List < MyMenuItem > data ) 
     {
             super(context , resource , textViewResourceId , data);
             mContext=context;
@@ -69,24 +77,24 @@ public class SMSListAdapter  extends ArrayAdapter< MyMenuItem >
             @Override
             public void onClick(View v) {
 
-                if(position != mSelectedPosition && mSelectedRB != null){
+                if(mSelectedRB != null){
                     mSelectedRB.setChecked(false);
                 }
 
-                mSelectedPosition = position;
                 mSelectedRB = (RadioButton)v;
+                setSelectText(mData.get ( position ).getText ( ));
             }
         });
 
 
-        if(mSelectedPosition != position){
-            holder.check.setChecked(false);
-        }else{
-            holder.check.setChecked(true);
-            if(mSelectedRB != null && holder.check != mSelectedRB){
-                mSelectedRB = holder.check;
-            }
-        }
+//        if(mSelectedPosition != position){
+//            holder.check.setChecked(false);
+//        }else{
+//            holder.check.setChecked(true);
+//            if(mSelectedRB != null && holder.check != mSelectedRB){
+//                mSelectedRB = holder.check;
+//            }
+//        }
         
         holder.text.setText ( mData.get ( position ).getText ( ) ) ;
         holder.comment.setText ( mData.get ( position ).getComment ( ) ) ;
@@ -97,13 +105,6 @@ public class SMSListAdapter  extends ArrayAdapter< MyMenuItem >
 //        ) ;
 
         return convertView ;
-    }
-    
-
-    public long getItemId(int position) {
-        // TODO Auto-generated method stub
-    	String ss ="";
-        return position;
     }
 
 

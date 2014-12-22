@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -93,6 +94,10 @@ public class MainActivity extends ActionBarActivity {
                     }
                 });
 
+    }
+    
+    public void showSelectText(View v){
+    	Toast.makeText(getApplicationContext(), smsListAdapter.getSelectText(), Toast.LENGTH_SHORT).show();
     }
 
 	@Override
