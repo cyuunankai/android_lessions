@@ -61,6 +61,7 @@ public class MainActivity extends ActionBarActivity {
             // Set The Adapter to ListView
             listViewSMS.setAdapter(smsListAdapter);
             
+            
             // to handle click event on listView item
             listViewSMS.setOnItemClickListener(new OnItemClickListener()
             {

@@ -5,6 +5,7 @@ import java.util.List;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ArrayAdapter;
@@ -20,6 +21,9 @@ public class SMSListAdapter  extends ArrayAdapter< MyMenuItem >
     int                    mResource ;
     List < MyMenuItem >    mData ;
     private Context mContext;
+    
+    private RadioButton mSelectedRB;
+    private int mSelectedPosition = -1;
     
     public SMSListAdapter(Context context,int resource , int textViewResourceId , List < MyMenuItem > data ) 
     {
@@ -38,7 +42,7 @@ public class SMSListAdapter  extends ArrayAdapter< MyMenuItem >
     }
 
     // getView method is called for each item of ListView
-    public View getView(int position,  View convertView, ViewGroup parent) 
+    public View getView(final int position,  View convertView, ViewGroup parent) 
     {
     	ViewHolder holder = null ;
         if ( convertView == null ) {
@@ -60,6 +64,30 @@ public class SMSListAdapter  extends ArrayAdapter< MyMenuItem >
             holder = ( ViewHolder ) convertView.getTag ( ) ;
         }
 
+        holder.check.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                if(position != mSelectedPosition && mSelectedRB != null){
+                    mSelectedRB.setChecked(false);
+                }
+
+                mSelectedPosition = position;
+                mSelectedRB = (RadioButton)v;
+            }
+        });
+
+
+        if(mSelectedPosition != position){
+            holder.check.setChecked(false);
+        }else{
+            holder.check.setChecked(true);
+            if(mSelectedRB != null && holder.check != mSelectedRB){
+                mSelectedRB = holder.check;
+            }
+        }
+        
         holder.text.setText ( mData.get ( position ).getText ( ) ) ;
         holder.comment.setText ( mData.get ( position ).getComment ( ) ) ;
         holder.icon.setImageResource(android.R.drawable.arrow_down_float);
@@ -69,6 +97,13 @@ public class SMSListAdapter  extends ArrayAdapter< MyMenuItem >
 //        ) ;
 
         return convertView ;
+    }
+    
+
+    public long getItemId(int position) {
+        // TODO Auto-generated method stub
+    	String ss ="";
+        return position;
     }
 
 
