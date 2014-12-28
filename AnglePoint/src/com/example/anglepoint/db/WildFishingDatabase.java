@@ -413,7 +413,7 @@ public class WildFishingDatabase {
 		SQLiteDatabase db = mDatabaseOpenHelper.getReadableDatabase();
 		
 		StringBuffer  sb = new StringBuffer();
-		sb.append("SELECT p._id,p.depth,rl.name AS rod_length_name,lm.name AS lure_method_name,b.name AS bait_name ");
+		sb.append("SELECT p._id,p.depth,rl._id AS rl_id,rl.name AS rod_length_name,lm._id AS lm_id,lm.name AS lure_method_name,b._id AS b_id,b.name AS bait_name ");
 		sb.append("FROM points p  ");
 		sb.append("INNER JOIN rod_lengths rl ON p.rod_length_id=rl._id ");
 		sb.append("INNER JOIN lure_methods lm ON p.lure_method_id=lm._id ");
@@ -428,8 +428,11 @@ public class WildFishingDatabase {
 			Point point = new Point();
 			point.setId(c.getString(c.getColumnIndex(WildFishingContract.Points._ID)));
 			point.setDepth(c.getString(c.getColumnIndex(WildFishingContract.Points.COLUMN_NAME_DEPTH)));
+			point.setRodLengthId(c.getString(c.getColumnIndex("rl_id")));
 			point.setRodLengthName(c.getString(c.getColumnIndex("rod_length_name")));
+			point.setLureMethodId(c.getString(c.getColumnIndex("lm_id")));
 			point.setLureMethodName(c.getString(c.getColumnIndex("lure_method_name")));
+			point.setBaitId(c.getString(c.getColumnIndex("b_id")));
 			point.setBaitName(c.getString(c.getColumnIndex("bait_name")));
 		
 			list.add(point);

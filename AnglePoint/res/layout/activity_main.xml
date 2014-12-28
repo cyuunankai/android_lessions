@@ -8,9 +8,37 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.anglepoint.MainActivity" >
 
-    <TextView
+    <ListView
+        android:id="@+id/listViewPoint"
+        android:layout_above = "@+id/buttonsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" >
+    </ListView>
+    
+    <RelativeLayout
+    android:id="@+id/buttonsLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:orientation="horizontal" >
+
+    <Button
+        android:id="@+id/selectPointAddBtn"
+        android:onClick="selectPointAddBtnClick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_alignParentLeft="true"
+        android:text="添加" />
+
+    <Button
+        android:id="@+id/selectPointSelectBtn"
+        android:onClick="selectPointSelectBtnClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="选择" />
+	</RelativeLayout>
 
 </RelativeLayout>

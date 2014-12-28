@@ -1,0 +1,125 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.anglepoint.AddPointActivity" >
+
+    <TextView
+        android:id="@+id/addPointTextView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="14dp"
+        android:text="竿长：" />
+
+    <TextView
+        android:id="@+id/addPointTextView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/addPointTextView3"
+        android:layout_below="@+id/addPointTextView3"
+        android:layout_marginTop="45dp"
+        android:text="水深：" />
+
+    <TextView
+        android:id="@+id/addPointTextView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/addPointTextView2"
+        android:layout_below="@+id/addPointTextView2"
+        android:layout_marginTop="38dp"
+        android:text="打窝：" />
+
+    <TextView
+        android:id="@+id/addPointTextView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/addPointTextView1"
+        android:layout_below="@+id/addPointTextView1"
+        android:layout_marginTop="44dp"
+        android:text="饵料：" />
+
+    <Spinner
+        android:id="@+id/addPointSpinnerRodLength"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/addPointTextView1" />
+
+    <Spinner
+        android:id="@+id/addPointSpinnerLureMethod"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/addPointSpinnerRodLength"
+        android:layout_below="@+id/addPointTextView2"
+        android:layout_marginTop="16dp" />
+
+    <Spinner
+        android:id="@+id/addPointSpinnerBait"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/addPointSpinnerLureMethod"
+        android:layout_toRightOf="@+id/addPointTextView4" />
+
+    <EditText
+        android:id="@+id/addPointEditTextDepth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/addPointSpinnerRodLength"
+        android:layout_below="@+id/addPointSpinnerRodLength"
+        android:ems="10"
+        android:inputType="numberDecimal" >
+
+    </EditText>
+    
+    <Button
+        android:id="@+id/addPointShowAddRodLengthBtn"
+        android:onClick="addPointShowAddRodLengthBtnClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/addPointSpinnerRodLength"
+        android:text="添加竿长" />
+        
+    <Button
+        android:id="@+id/addPointShowAddLureMethodBtn"
+        android:onClick="addPointShowAddLureMethodBtnClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/addPointSpinnerLureMethod"
+        android:text="添加打窝" />
+        
+     <Button
+        android:id="@+id/addPointShowAddBaitBtn"
+        android:onClick="addPointShowAddBaitBtnClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/addPointSpinnerBait"
+        android:text="添加饵料" />
+    
+    <RelativeLayout
+    android:id="@+id/buttonsLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:orientation="horizontal" >
+
+    <Button
+        android:id="@+id/addPointSaveBtn"
+        android:onClick="addPointSaveBtnClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="保存" />
+	</RelativeLayout>
+
+    
+    
+</RelativeLayout>
