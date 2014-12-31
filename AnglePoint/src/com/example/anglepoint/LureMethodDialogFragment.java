@@ -41,32 +41,32 @@ public class LureMethodDialogFragment extends DialogFragment {
 
 	
 	@Override
-	public Dialog onCreateDialog(Bundle savedInstanceState) {
-	    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-	    // Get the layout inflater
-	    LayoutInflater inflater = getActivity().getLayoutInflater();
-	    final View v = inflater.inflate(R.layout.dialog_lure_method, null);
-	    // Inflate and set the layout for the dialog
-	    // Pass null as the parent view because its going in the dialog layout
-	    builder.setView(v)
-	    // Add action buttons
-	           .setPositiveButton("±£´æ", new DialogInterface.OnClickListener() {
-	               @Override
-	               public void onClick(DialogInterface dialog, int id) {
-	                   // sign in the user ...
-	            	   EditText etName = (EditText)v.findViewById(R.id.lureMethodName);
-	            	   EditText etDetail = (EditText)v.findViewById(R.id.lureMethodDetail);
-	            	   
-	            	   mListener.onLMDialogPositiveClick(LureMethodDialogFragment.this, etName.getEditableText().toString(), etDetail.getEditableText().toString());
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        // Get the layout inflater
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        final View v = inflater.inflate(R.layout.dialog_lure_method, null);
+        // Inflate and set the layout for the dialog
+        // Pass null as the parent view because its going in the dialog layout
+        builder.setView(v)
+                // Add action buttons
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        // sign in the user ...
+                        EditText etName = (EditText)v.findViewById(R.id.lureMethodName);
+                        EditText etDetail = (EditText)v.findViewById(R.id.lureMethodDetail);
 
-	               }
-	           })
-	           .setNegativeButton("È¡Ïû", new DialogInterface.OnClickListener() {
-	               public void onClick(DialogInterface dialog, int id) {
-	            	   LureMethodDialogFragment.this.getDialog().cancel();
-	               }
-	           });      
-	    return builder.create();
-	}
+                        mListener.onLMDialogPositiveClick(LureMethodDialogFragment.this, etName.getEditableText().toString(), etDetail.getEditableText().toString());
+
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        LureMethodDialogFragment.this.getDialog().cancel();
+                    }
+                });
+        return builder.create();
+    }
 
 }
