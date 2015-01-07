@@ -1,0 +1,65 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.my.volcano.MainActivity" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hello_world" />
+
+    <Button
+        android:id="@+id/lockScreenPicBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/notificateBtn"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_marginBottom="26dp"
+        android:onClick="lockScreenPicBtnClickListener"
+        android:text="查看&apos;更改锁屏图片&apos;挂起" />
+
+    <Button
+        android:id="@+id/pendingBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/lockScreenPicBtn"
+        android:layout_alignLeft="@+id/lockScreenPicBtn"
+        android:layout_marginBottom="20dp"
+        android:onClick="pendingBtnClickListener"
+        android:text="挂起" />
+
+    <Button
+        android:id="@+id/notificateBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/pendingBtn"
+        android:layout_centerVertical="true"
+        android:onClick="notificateBtnClickListener"
+        android:text="查看&apos;通知&apos;挂起" />
+
+    <Button
+        android:id="@+id/resetPendingBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/notificateBtn"
+        android:layout_below="@+id/notificateBtn"
+        android:layout_marginTop="59dp"
+        android:onClick="resetPendingBtnClickListener"
+        android:text="重新设定挂起" />
+
+    <Button
+        android:id="@+id/cancelPendingBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/resetPendingBtn"
+        android:layout_below="@+id/notificateBtn"
+        android:onClick="cancelPendingBtnClickListener"
+        android:text="取消挂起" />
+
+</RelativeLayout>
