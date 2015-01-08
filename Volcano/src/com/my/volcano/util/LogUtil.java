@@ -12,7 +12,7 @@ public class LogUtil {
 	public static void appendLog(String text)
 	{       
 	   
-	   File logFile = new File(Environment.getExternalStorageDirectory() + "/volcano.log");
+	   File logFile = new File(Environment.getExternalStorageDirectory() + "/volcanoLog.txt");
 	   if (!logFile.exists())
 	   {
 	      try

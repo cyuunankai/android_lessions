@@ -1,9 +1,12 @@
 package com.my.volcano;
 
+import java.io.File;
+
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,6 +29,9 @@ public class MainActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
+		File logFile = new File(Environment.getExternalStorageDirectory() + "/volcanoLog.txt");
+		logFile.delete();
+		
 		mContext = getApplicationContext();
 		clspbr = new ChangeLockScreenPicBroadcastRecevier();
 		nbr = new NotificateBroadcastRecevier();
@@ -34,11 +40,11 @@ public class MainActivity extends ActionBarActivity {
 	}
 	
 	public void pendingBtnClickListener(View v){
-		int hour = 21;
-		int min = 53;
+		int hour = 20;
+		int min = 0;
 		clspbr.SetAlarm(mContext, hour, min);
 		
-		min = min + 1;
+		//min = min + 1;
 		nbr.SetAlarm(mContext, hour, min);
 	}
 	
@@ -57,11 +63,11 @@ public class MainActivity extends ActionBarActivity {
 	
 	public void resetPendingBtnClickListener(View v){
 		LogUtil.appendLog(DateUtil.getSysTimeStr() + " reset start");
-		int hour = 21;
-		int min = 30;
+		int hour = 20;
+		int min = 5;
 		clspbr.SetAlarm(mContext, hour, min);
 		
-		min = min + 1;
+//		min = min + 1;
 		nbr.SetAlarm(mContext, hour, min);
 		
 		LogUtil.appendLog(DateUtil.getSysTimeStr() + " reset end");

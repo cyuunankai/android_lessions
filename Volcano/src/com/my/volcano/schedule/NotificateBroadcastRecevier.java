@@ -1,6 +1,7 @@
 package com.my.volcano.schedule;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -39,11 +40,14 @@ public class NotificateBroadcastRecevier extends BroadcastReceiver {
 		calendar.set(Calendar.MINUTE, min);
 		calendar.set(Calendar.SECOND, 0);
 		
+		
+		
         AlarmManager am=(AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, NotificateBroadcastRecevier.class);
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, 0);
 
-        am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 1000*60, pi);
+        am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 1000*1, pi);
+        
     }
 
     public void CancelAlarm(Context context)
