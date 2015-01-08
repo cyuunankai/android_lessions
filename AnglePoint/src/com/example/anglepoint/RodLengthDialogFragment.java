@@ -50,7 +50,7 @@ public class RodLengthDialogFragment extends DialogFragment {
 	    // Pass null as the parent view because its going in the dialog layout
 	    builder.setView(v)
 	    // Add action buttons
-	           .setPositiveButton("±£´æ", new DialogInterface.OnClickListener() {
+	           .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 	               @Override
 	               public void onClick(DialogInterface dialog, int id) {
 	                   // sign in the user ...
@@ -60,7 +60,7 @@ public class RodLengthDialogFragment extends DialogFragment {
 
 	               }
 	           })
-	           .setNegativeButton("È¡Ïû", new DialogInterface.OnClickListener() {
+	           .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
 	               public void onClick(DialogInterface dialog, int id) {
 	            	   RodLengthDialogFragment.this.getDialog().cancel();
 	               }

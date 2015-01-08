@@ -20,10 +20,10 @@ public class PointDetailActivity extends ActionBarActivity {
 		setContentView(R.layout.activity_point_detail);
 		
 		Intent intent = getIntent();
-		String rodLengthName = intent.getStringExtra(this.ROD_LENGTH_NAME);
-		String depth = intent.getStringExtra(this.DEPTH);
-		String lureMethodName = intent.getStringExtra(this.LURE_METHOD_NAME);
-		String bait = intent.getStringExtra(this.BAIT);
+		String rodLengthName = intent.getStringExtra(ROD_LENGTH_NAME);
+		String depth = intent.getStringExtra(DEPTH);
+		String lureMethodName = intent.getStringExtra(LURE_METHOD_NAME);
+		String bait = intent.getStringExtra(BAIT);
 		((TextView) findViewById(R.id.pointDetailRodLength)).setText(rodLengthName);
 		((TextView) findViewById(R.id.pointDetailDepth)).setText(depth);
 		((TextView) findViewById(R.id.pointDetailLureMethod)).setText(lureMethodName);

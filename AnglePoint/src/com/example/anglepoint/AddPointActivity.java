@@ -1,5 +1,8 @@
 package com.example.anglepoint;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -23,6 +26,8 @@ public class AddPointActivity extends ActionBarActivity implements RodLengthDial
 														           LureMethodDialogFragment.NoticeDialogListener,
 														           BaitDialogFragment.NoticeDialogListener {
 
+    public static final String POINT_ID = "point_id";
+    String globalPointId;
 	WildFishingDatabase db;
 	
 	@Override
@@ -31,15 +36,34 @@ public class AddPointActivity extends ActionBarActivity implements RodLengthDial
 		setContentView(R.layout.activity_add_point);
 		
 		db = new WildFishingDatabase(getApplicationContext());
-		fillRodLengthSpinner(null);
-		fillLureMethodSpinner(null);
-		fillBaitSpinner(null);
+		
+        Intent intent = getIntent();
+        if (intent.getExtras() != null && intent.getExtras().containsKey(POINT_ID)) {
+            String pointId = intent.getStringExtra(POINT_ID);
+            globalPointId = pointId;
+            Point point = db.getPointById(pointId);
+            EditText editTextDepth = (EditText)findViewById(R.id.addPointEditTextDepth);
+            editTextDepth.setText(point.getDepth());
+            fillRodLengthSpinner(point.getRodLengthId());
+            fillLureMethodSpinner(point.getLureMethodId());
+            fillBaitSpinner(point.getBaitId());
+        } else {
+            fillRodLengthSpinner(null);
+            fillLureMethodSpinner(null);
+            fillBaitSpinner(null);
+        }
+		
 	}
 	
 	private void fillRodLengthSpinner(String selectedId) {
 
 		Cursor c = db.getRodLengthForPinner();
-
+		List<Point> pList = new ArrayList<Point>();
+		while(c.moveToNext()){
+		    Point p = new Point();
+		    p.setRodLengthId(c.getString(c.getColumnIndex(WildFishingContract.RodLengths._ID)));
+		    pList.add(p);
+        }
 		// create an array to specify which fields we want to display
 		String[] from = new String[] { WildFishingContract.RodLengths.COLUMN_NAME_NAME };
 		// create an array of the display item we want to bind our data to
@@ -52,14 +76,20 @@ public class AddPointActivity extends ActionBarActivity implements RodLengthDial
 		Spinner s = (Spinner) findViewById(R.id.addPointSpinnerRodLength);
 		s.setAdapter(adapter);
 		
-		// 选中制定项目
+		// 璁惧畾閫変腑椤圭洰
+		String colId = WildFishingContract.RodLengths._ID;
+		setSpinnerSelection(selectedId, c, s, colId);
+	}
+
+	private void setSpinnerSelection(String selectedId, Cursor c, Spinner s, String colId) {
 		if(selectedId != null){
 			int position = 0;
+			c.moveToPosition(-1);
 			while(c.moveToNext()){
-				position++ ;
-				if(c.getString(c.getColumnIndex(WildFishingContract.RodLengths._ID)).equals(selectedId)){
+				if(c.getString(c.getColumnIndex(colId)).equals(selectedId)){
 					break;
 				}
+				position++ ;
 			}
 			s.setSelection(position);
 		}
@@ -81,17 +111,9 @@ public class AddPointActivity extends ActionBarActivity implements RodLengthDial
 		Spinner s = (Spinner) findViewById(R.id.addPointSpinnerLureMethod);
 		s.setAdapter(adapter);
 		
-		// 选中制定项目
-		if(selectedId != null){
-			int position = 0;
-			while(c.moveToNext()){
-				position++ ;
-				if(c.getString(c.getColumnIndex(WildFishingContract.LureMethods._ID)).equals(selectedId)){
-					break;
-				}
-			}
-			s.setSelection(position);
-		}
+		// 璁惧畾閫変腑椤圭洰
+		String colId = WildFishingContract.LureMethods._ID;
+		setSpinnerSelection(selectedId, c, s, colId);
 	}
 	
 	private void fillBaitSpinner(String selectedId) {
@@ -110,17 +132,9 @@ public class AddPointActivity extends ActionBarActivity implements RodLengthDial
 		Spinner s = (Spinner) findViewById(R.id.addPointSpinnerBait);
 		s.setAdapter(adapter);
 		
-		// 选中制定项目
-		if(selectedId != null){
-			int position = 0;
-			while(c.moveToNext()){
-				position++ ;
-				if(c.getString(c.getColumnIndex(WildFishingContract.Baits._ID)).equals(selectedId)){
-					break;
-				}
-			}
-			s.setSelection(position);
-		}
+		// 璁惧畾閫変腑椤圭洰
+		String colId = WildFishingContract.Baits._ID;
+		setSpinnerSelection(selectedId, c, s, colId);
 	}
 	
 	public void addPointShowAddRodLengthBtnClick(View v){
@@ -199,6 +213,8 @@ public class AddPointActivity extends ActionBarActivity implements RodLengthDial
 
 	
 	public void addPointSaveBtnClick(View v){
+	    Intent intent = getIntent();
+	    
 		Spinner spinnerRodLength = (Spinner) findViewById(R.id.addPointSpinnerRodLength);
 		Spinner spinnerLureMethod = (Spinner) findViewById(R.id.addPointSpinnerLureMethod);
 		Spinner spinnerBait = (Spinner) findViewById(R.id.addPointSpinnerBait);
@@ -210,10 +226,14 @@ public class AddPointActivity extends ActionBarActivity implements RodLengthDial
 		p.setDepth(editTextDepth.getText().toString());
 		p.setLureMethodId(String.valueOf(spinnerLureMethod.getSelectedItemId()));
 		p.setBaitId(String.valueOf(spinnerBait.getSelectedItemId()));
-		long pointId = db.addPoint(p);
+		if(globalPointId != null){
+		    p.setId(globalPointId);
+		    db.updatePoint(p);
+		}else{
+		    long pointId = db.addPoint(p);
+		    intent.putExtra("pointId", String.valueOf(pointId));
+		}
 		
-		Intent intent = getIntent();
-		intent.putExtra("pointId", String.valueOf(pointId));
 		setResult(RESULT_OK, intent);
 		finish();
 //		startActivity(intent);
