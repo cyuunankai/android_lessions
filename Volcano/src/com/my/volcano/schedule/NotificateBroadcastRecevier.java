@@ -1,7 +1,6 @@
 package com.my.volcano.schedule;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -10,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.PowerManager;
 
+import com.my.volcano.service.NotificationService;
 import com.my.volcano.util.DateUtil;
 import com.my.volcano.util.LogUtil;
 
@@ -24,6 +24,9 @@ public class NotificateBroadcastRecevier extends BroadcastReceiver {
          PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "YOUR TAG");
          //Acquire the lock
          wl.acquire();
+         
+         Intent i = new Intent(context, NotificationService.class);
+         context.startService(i);
          
          LogUtil.appendLog(DateUtil.getSysTimeStr() + " execute 'notificate' pending event ");
          

@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.PowerManager;
 
+import com.my.volcano.service.ChangeWallPaperService;
 import com.my.volcano.util.DateUtil;
 import com.my.volcano.util.LogUtil;
 
@@ -23,7 +24,11 @@ public class ChangeLockScreenPicBroadcastRecevier extends BroadcastReceiver {
          //Acquire the lock
          wl.acquire();
          
+         Intent i = new Intent(context, ChangeWallPaperService.class);
+         context.startService(i);
+         
          LogUtil.appendLog(DateUtil.getSysTimeStr() + " execute 'change lock screen pic' pending event ");
+         
          
          //Release the lock
          wl.release();

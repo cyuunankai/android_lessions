@@ -1,10 +1,15 @@
 package com.my.volcano;
 
 import java.io.File;
+import java.io.IOException;
 
 import android.app.PendingIntent;
+import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
@@ -16,6 +21,7 @@ import android.widget.Toast;
 import com.my.volcano.schedule.ChangeLockScreenPicBroadcastRecevier;
 import com.my.volcano.schedule.NotificateBroadcastRecevier;
 import com.my.volcano.util.DateUtil;
+import com.my.volcano.util.FileUtil;
 import com.my.volcano.util.LogUtil;
 
 public class MainActivity extends ActionBarActivity {
@@ -23,6 +29,7 @@ public class MainActivity extends ActionBarActivity {
 	Context mContext;
 	ChangeLockScreenPicBroadcastRecevier clspbr;
 	NotificateBroadcastRecevier nbr;
+	WallpaperManager myWallpaperManager;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,13 +42,15 @@ public class MainActivity extends ActionBarActivity {
 		mContext = getApplicationContext();
 		clspbr = new ChangeLockScreenPicBroadcastRecevier();
 		nbr = new NotificateBroadcastRecevier();
+		
+		myWallpaperManager = WallpaperManager.getInstance(getApplicationContext());
 		LogUtil.appendLog(DateUtil.getSysTimeStr() + " onCreate start");
 			
 	}
 	
 	public void pendingBtnClickListener(View v){
-		int hour = 20;
-		int min = 0;
+		int hour = 16;
+		int min = 55;
 		clspbr.SetAlarm(mContext, hour, min);
 		
 		//min = min + 1;
@@ -49,11 +58,11 @@ public class MainActivity extends ActionBarActivity {
 	}
 	
 	public void lockScreenPicBtnClickListener(View v){
-		Toast.makeText(mContext, "锁屏挂起" + checkIfChangeLockScreenPicPendingIntentIsRegistered(), Toast.LENGTH_SHORT).show();
+		Toast.makeText(mContext, "lockscreen pending" + checkIfChangeLockScreenPicPendingIntentIsRegistered(), Toast.LENGTH_SHORT).show();
 	}
 	
 	public void notificateBtnClickListener(View v){
-		Toast.makeText(mContext, "通知挂起" + checkIfNotificatePendingIntentIsRegistered(), Toast.LENGTH_SHORT).show();
+		Toast.makeText(mContext, "通notificate pending" + checkIfNotificatePendingIntentIsRegistered(), Toast.LENGTH_SHORT).show();
 	}
 	
 	public void cancelPendingBtnClickListener(View v){
@@ -72,6 +81,32 @@ public class MainActivity extends ActionBarActivity {
 		
 		LogUtil.appendLog(DateUtil.getSysTimeStr() + " reset end");
 	}
+	
+	public void changeWallPaperBtnClickListener(View v){
+	    
+	    Bitmap bm = ((BitmapDrawable)myWallpaperManager.getDrawable()).getBitmap();
+	    String fileName = getApplicationContext().getFilesDir() + "/wallPaper/userWallPaper.jpg";
+	    FileUtil.saveToInternalStorage(fileName, bm);
+	    
+	    try {
+            myWallpaperManager.setResource(R.drawable.ic_launcher);
+        } catch (IOException e) {
+            LogUtil.appendLog("set wallPaper error : " + e.getMessage());
+        }
+	    
+	}
+	
+	public void resetWallPaperbtnClickListener(View v) {
+	    String fileName = getApplicationContext().getFilesDir() + "/wallPaper/userWallPaper.jpg";
+	    
+	    try {
+            myWallpaperManager.setBitmap(BitmapFactory.decodeFile(fileName));
+        } catch (IOException e) {
+            LogUtil.appendLog("reset wallPaper error : " + e.getMessage());
+        }
+	}
+	
+	
 	
 	private boolean checkIfChangeLockScreenPicPendingIntentIsRegistered() {
 	    Intent intent = new Intent(mContext, ChangeLockScreenPicBroadcastRecevier.class);

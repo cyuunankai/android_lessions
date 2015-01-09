@@ -62,4 +62,25 @@
         android:onClick="cancelPendingBtnClickListener"
         android:text="取消挂起" />
 
+    <Button
+        android:id="@+id/changeWallPaperBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/resetPendingBtn"
+        android:layout_below="@+id/resetPendingBtn"
+        android:layout_marginTop="23dp"
+        android:onClick="changeWallPaperBtnClickListener"
+        android:text="changeWallPaper" />
+
+    <Button
+        android:id="@+id/resetWallPaperbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/changeWallPaperBtn"
+        android:layout_alignBottom="@+id/changeWallPaperBtn"
+        android:layout_marginLeft="25dp"
+        android:layout_toRightOf="@+id/changeWallPaperBtn"
+        android:onClick="resetWallPaperbtnClickListener"
+        android:text="resetWallPaper" />
+
 </RelativeLayout>
